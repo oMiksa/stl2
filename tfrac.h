@@ -32,6 +32,8 @@ public:
     TFrac operator *(TFrac temp);
     TFrac operator /(TFrac temp);
     int gcd_m(int a, int b);
+    void setF(int n);
+    void setS(int n);
 };
 
 static bool com(TFrac a, TFrac b) {

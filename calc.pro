@@ -27,15 +27,15 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    parser.cpp \
     tfrac.cpp \
-    dialog_inf.cpp
+    dialog_inf.cpp \
+    editor.cpp
 
 HEADERS += \
         mainwindow.h \
-    parser.h \
     tfrac.h \
-    dialog_inf.h
+    dialog_inf.h \
+    editor.h
 
 FORMS += \
         mainwindow.ui \

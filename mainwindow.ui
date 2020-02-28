@@ -41,7 +41,7 @@
     </widget>
     <widget class="QPushButton" name="pushButton_plus_mins">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
@@ -359,7 +359,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>&quot; &quot;</string>
+      <string>|</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_MS">

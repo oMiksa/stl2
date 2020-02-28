@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete ed;
 }
 
 void MainWindow::on_pushButton_n7_clicked()
@@ -22,32 +23,47 @@ void MainWindow::on_pushButton_n7_clicked()
 
 void MainWindow::on_pushButton_ADD_clicked()
 {
-    if (valid->validate(ui->lineEdit->text().append("+"), pos))
-        ui->lineEdit->setText(ui->lineEdit->text().append("+"));
+    QString first(ui->lineEdit->text());
+    if (valid->validate(first, pos) == 2) {
+        ed->set_action("+");
+        ed->set_oper_first(first);
+        ui->lineEdit->setText("");
+    }
 }
 
 void MainWindow::on_pushButton_MULT_clicked()
 {
-    if (valid->validate(ui->lineEdit->text().append("*"), pos))
-        ui->lineEdit->setText(ui->lineEdit->text().append("*"));
-}
+    QString first(ui->lineEdit->text());
+    if (valid->validate(first, pos) == 2) {
+        ed->set_action("*");
+        ed->set_oper_first(first);
+        ui->lineEdit->setText("");
+    }}
 
 void MainWindow::on_pushButton_DIV_clicked()
 {
-    if (valid->validate(ui->lineEdit->text().append("/"), pos))
-        ui->lineEdit->setText(ui->lineEdit->text().append("/"));
+    QString first(ui->lineEdit->text());
+    if (valid->validate(first, pos) == 2) {
+        ed->set_action("/");
+        ed->set_oper_first(first);
+        ui->lineEdit->setText("");
+    }
 }
 
 void MainWindow::on_pushButton_SUB_clicked()
 {
-    if (valid->validate(ui->lineEdit->text().append("-"), pos))
-        ui->lineEdit->setText(ui->lineEdit->text().append("-"));
+    QString first(ui->lineEdit->text());
+    if (valid->validate(first, pos) == 2) {
+        ed->set_action("-");
+        ed->set_oper_first(first);
+        ui->lineEdit->setText("");
+    }
 }
 
 void MainWindow::on_pushButton_point_clicked()
 {
-    if (valid->validate(ui->lineEdit->text().append(" "), pos))
-        ui->lineEdit->setText(ui->lineEdit->text().append(" "));
+    if (valid->validate(ui->lineEdit->text().append("/"), pos))
+        ui->lineEdit->setText(ui->lineEdit->text().append("/"));
 }
 
 void MainWindow::on_pushButton_n0_clicked()
@@ -116,42 +132,17 @@ void MainWindow::on_pushButton_BS_clicked()
 
 void MainWindow::on_pushButton_Result_clicked()
 {
-    QString str(ui->lineEdit->text());
-    if (valid->validate(str, pos) != 2) {
-        ui->lineEdit->setText("ERROR");
-    } else {
-        parser p(" " + str);
-        p.run();
-        //p.show();
-
-        TFrac dr1(p.elemnts.at(0).toInt(), p.elemnts.at(2).toInt());
-        TFrac dr2(p.elemnts.at(4).toInt(), p.elemnts.at(6).toInt());
-        TFrac res;
-
-        if (p.elemnts.at(3) == "+")
-            res = (dr1+dr2);
-        if (p.elemnts.at(3) == "-")
-            res = (dr1-dr2);
-        if (p.elemnts.at(3) == "*")
-            res = (dr1*dr2);
-        if (p.elemnts.at(3) == "/")
-            res = (dr1/dr2);
-        bool test = true;
-        while (test) {
-            test = false;
-            test += res.sokr(5);
-            test += res.sokr(3);
-            test += res.sokr(2);
-        }
-        if (res.getS() == 1)
-            ui->lineEdit->setText(QString::number(res.getF()));
-        else ui->lineEdit->setText(res.show());
+    QString second(ui->lineEdit->text());
+    if (valid->validate(second, pos) == 2) {
+        ed->set_oper_second(second);
+        ui->lineEdit->setText(ed->get_resoult());
     }
 }
 
 void MainWindow::init()
 {
-    QRegExp rx("(^-{0,1}[0-9]{1,4} / -{0,1}[1-9][0-9]{0,3} [-+*/]{1,1} -{0,1}[0-9]{1,4} / -{0,1}[1-9][0-9]{0,3}$)");
+    ed = new editor();
+    QRegExp rx("(^-{0,1}[0-9]{1,4}/[1-9][0-9]{0,3}$)");
     valid = new QRegExpValidator(rx, this);
     ui->lineEdit->setValidator(valid);
 }
@@ -162,4 +153,13 @@ void MainWindow::on_actionInformation_triggered()
     QDialog *f_d = new QDialog;
     d.setupUi(f_d);
     f_d->show();
+}
+
+void MainWindow::on_pushButton_plus_mins_clicked()
+{
+    if (ui->lineEdit->text().indexOf("-") == -1) {
+        ui->lineEdit->setText("-" + ui->lineEdit->text());
+    } else {
+        ui->lineEdit->setText(ui->lineEdit->text().right(ui->lineEdit->text().length() - 1));
+    }
 }

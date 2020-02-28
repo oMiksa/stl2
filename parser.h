@@ -13,13 +13,17 @@ private:
 
 
 public:
-    QVector<QString> elemnts;
+    QVector<QString> elemnts, elemnts2;
 
     parser();
     parser(QString);
     void run();
+    void run2();
+    void con();
+    void copy();
     void show();
 
+    void show2();
 };
 
 #endif // PARSER_H

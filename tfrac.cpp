@@ -11,6 +11,16 @@ int TFrac::getS()
     return second;
 }
 
+void TFrac::setS(int n)
+{
+    second = n;
+}
+
+void TFrac::setF(int n)
+{
+    first = n;
+}
+
 QString TFrac::show()
 {
     return QString::number(first) + "/" + QString::number(second);

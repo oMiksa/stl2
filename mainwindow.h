@@ -9,6 +9,13 @@
 #include "parser.h"
 #include "dialog_inf.h"
 #include "ui_dialog_inf.h"
+#include "editor.h"
+
+#define ADD 1
+#define MULT 2
+#define DIV 3
+#define SUB 4
+
 
 namespace Ui {
 class MainWindow;
@@ -62,9 +69,14 @@ private slots:
 
     void on_actionInformation_triggered();
 
+    void on_pushButton_plus_mins_clicked();
+
 private:
     QValidator *valid;
     int pos;
+    editor *ed;
+    TFrac *dr1, *dr2;
+    int status;
 
     Ui::MainWindow *ui;
     void init();
